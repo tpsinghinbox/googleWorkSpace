@@ -8,7 +8,18 @@ function upDateCityDropDown(){
     .filter(function(o){return o !== ""});
     updateCity("City Name", options);
 }
-
+function removeDups(array) {
+  var outArray = [];
+  array.sort():
+  outArray.push(array[0]);
+  for(var n in array){
+    Logger.log(outArray[outArray.length-1]+'  =  '+array[n]+' ?');
+    if(outArray[outArray.length-1]!=array[n]){
+      outArray.push(array[n]);
+    }
+  }
+  return outArray;
+}
 function main(){
  // var labels = cityData.getRange(1,1,1, cityData.getLastColumn()).getValues();
  // Logger.log(labels);
