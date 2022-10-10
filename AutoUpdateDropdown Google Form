@@ -1,0 +1,58 @@
+var ssId = "1cj03npOq97186airGuBzWl9wJX5a4iGyPEwCzJ4izGI";
+var formId = "1osyxsmAseceepJqWY9zuRjaNQmHImGVKdLtSUh51cbQ";
+var cityData = SpreadsheetApp.openById(ssId).getSheetByName("CityList");
+var form = FormApp.openById(formId);
+
+function upDateCityDropDown(){
+  var options = cityData.getRange(2,3,cityData.getLastRow()-1,1).getValues().map(function(o){ return o[0]})
+    .filter(function(o){return o !== ""});
+    updateCity("City Name", options);
+}
+
+function main(){
+ // var labels = cityData.getRange(1,1,1, cityData.getLastColumn()).getValues();
+ // Logger.log(labels);
+  //labels.forEach(function(lable, i){
+    //var options = cityData.getRange(2,i+1,cityData.getLastRow()-1,1).getValues().map(function(o){ //return o[0]})
+   // .filter(function(o){return o !== ""});
+   // Logger.log(options)
+
+ // });
+ // var options = cityData.getRange(2,3,cityData.getLastRow()-1,1).getValues().map(function(o){ return o[0]})
+  //  .filter(function(o){return o !== ""});
+   // updateCity("City Name", options);
+}
+
+function myFunction() {
+  //var city = "City Name";
+  //var items = form.getItems();
+ // var cities = items.map(function(item){
+    //return item.getTitle();
+ // });
+ // var pos = cities.indexOf(city);
+ // var item = items[pos];
+ // var id = item.getId().toString();
+ // var values = ["a","b"];
+//  updateCity(id,values)
+//  Logger.log(id)
+  //var item = form.getItemById(245385898);
+ // var values =Array("delhi","ghaziabad");
+//item.asListItem().setChoiceValues(values);
+  //Logger.log(item.getTitle());
+  //var items = form.getItems();
+  //Logger.log(items[2].getId().toString());
+  
+}
+function updateCity(title,values) {
+  
+  var items = form.getItems();
+  var cities = items.map(function(item){
+    return item.getTitle();
+  });
+  var pos = cities.indexOf(title);
+  var item = items[pos];
+  var id = item.getId().toString();  
+  var item = form.getItemById(id);  
+  item.asListItem().setChoiceValues(values);
+  
+}
