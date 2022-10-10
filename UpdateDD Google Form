@@ -1,0 +1,45 @@
+var ssId = "1cj03npOq97186airGuBzWl9wJX5a4iGyPEwCzJ4izGI";
+var cityData = SpreadsheetApp.openById(ssId).getSheetByName("CityList");
+var RegForm = FormApp.openById("1osyxsmAseceepJqWY9zuRjaNQmHImGVKdLtSUh51cbQ");
+var CertForm = FormApp.openById("11Ja85MeoiiINBqdDuPo5K1fzePdycq8k1-zl1vLpAxo");
+
+function upDateCityDropDown(){
+  var options = cityData.getRange(2,3,cityData.getLastRow()-1,1).getValues().map(function(o){ return o[0]})
+    .filter(function(o){return o !== ""});
+    var States = cityData.getRange(2,1,cityData.getLastRow()-1,1).getValues().map(function(o){ return o[0]})
+    .filter(function(o){return o !== ""});
+    var uniqueCity = removeDups(options);
+    var uniqueState = removeDups(States)
+    updateDD("City", uniqueCity, RegForm);
+    updateDD("City", uniqueCity, CertForm);
+    updateDD("State", uniqueState, RegForm);
+    updateDD("State", uniqueState, CertForm);
+
+}
+
+function removeDups(array) {
+  var outArray = [];
+  array.sort();
+  outArray.push(array[0]);
+  for(var n in array){
+    Logger.log(outArray[outArray.length-1]+'  =  '+array[n]+' ?');
+    if(outArray[outArray.length-1]!=array[n]){
+      outArray.push(array[n]);
+    }
+  }
+  return outArray;
+}
+
+function updateDD(title,values,form) {
+  
+  var items = form.getItems();
+  var cities = items.map(function(item){
+    return item.getTitle();
+  });
+  var pos = cities.indexOf(title);
+  var item = items[pos];
+  var id = item.getId().toString();  
+  var item = form.getItemById(id);  
+  item.asListItem().setChoiceValues(values);
+  
+}
